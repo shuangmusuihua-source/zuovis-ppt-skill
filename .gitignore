@@ -1,0 +1,17 @@
+# 测试生成的 HTML
+*.html
+!showcase.html
+!template.html
+
+# 评估数据
+zuovis-ppt-skill-workspace/
+
+# Python cache
+__pycache__/
+
+# macOS
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
