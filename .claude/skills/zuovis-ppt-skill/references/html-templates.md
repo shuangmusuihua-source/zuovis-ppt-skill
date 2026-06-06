@@ -181,7 +181,7 @@
       </li>
     </ul>
   </div>
-  <div class="vs-badge"><svg><!-- swords SVG --></svg></div>
+  <div class="vs-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="2"/><circle cx="6" cy="6" r="2"/><path d="M13 6h3a2 2 0 0 1 2 2v7"/><path d="M11 18H8a2 2 0 0 1-2-2V9"/></svg></div>
   <div class="feature-card right">
     <!-- 同上结构，右卡片 header 和 list 靠右对齐 -->
   </div>
@@ -196,7 +196,7 @@
 - `.feature-card-title` / `.feature-card-subtitle` — 卡片标题行
 - `.feature-card-divider` — 绿色分割线
 - `.feature-list` > `li` — 特性列表，每行带绿色 check 图标
-- `.vs-badge` — 中间绿色渐变圆形 VS 徽章
+- `.vs-badge` — 中间绿色渐变圆形徽章，内嵌 git-compare 双向箭头图标
 - `.check-icon` — 绿色圆形对勾
 
 ---
@@ -273,126 +273,62 @@
 
 ## 架构图 (architecture)
 
-使用 **内联 SVG** 绘制架构图。SVG 的 `viewBox` 自动等比缩放，不会溢出。
+使用 **HTML/CSS 组件拼装**，不手写 SVG 坐标。根据架构描述选择合适的零件自由组装，支持层级架构、中心平台、能力矩阵等多种样式。
 
-### 设计规范
+完整组件文档、CSS 类名、组装指南见 `references/arch-components.md`。生成架构页前务必先读该文件。
 
-- 卡片底色：business-modern 用 `#ECFDF5`（浅薄荷绿），business-dark 用 `#0D2818`（暗森林绿）
-- 卡片圆角 rx=14，通过 figma-squircle 处理为 squircle
-- 投影：`<filter>` feDropShadow，`flood-color="#0F172A" flood-opacity="0.06"`
-- 每层卡片内：图标（绿色描边 24×24）+ 层级中英文名 + 描述文字，紧凑排列
-- 层级间用绿色渐变箭头连接
-- L3 同层多模块：用虚线绿色圆角框 + 浅绿背景包裹，明确同层关系
-- 右侧标注 L1/L2/L3/L4 层级编号
-- viewBox="0 0 860 320"，放在 content-region 内，`style="width:100%;max-height:100%"`
+### 三种基础样式
 
-### 单列 SVG 模板（4 层含 L3 两列示例）
+| 样式 | 适用场景 | 核心组件 |
+|------|------|------|
+| 层级架构 | 分层系统（如网络协议栈、技术平台） | arch-box + arch-stack + arch-arrow-down |
+| 中心平台 | 中台架构、数据平台（外部节点 + 内部模块） | arch-box + arch-section + arch-node + arch-module + arch-wires |
+| 能力矩阵 | 功能展示、产品能力概览 | arch-sidebar + arch-grid + arch-card |
+
+### 快速参考
 
 ```html
-<svg class="arch-svg" viewBox="0 0 860 320" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <linearGradient id="g-arrow" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%" stop-color="#10B981"/><stop offset="100%" stop-color="#34D399"/>
-    </linearGradient>
-    <filter id="card-shadow">
-      <feDropShadow dx="0" dy="1" stdDeviation="4" flood-color="#0F172A" flood-opacity="0.06"/>
-    </filter>
-  </defs>
+<!-- 层级架构 -->
+<div class="arch-stack">
+  <div class="arch-box"><!-- L1 ... --></div>
+  <div class="arch-arrow-down"><svg>...</svg></div>
+  <div class="arch-box"><!-- L2 ... --></div>
+  <div class="arch-arrow-down"><svg>...</svg></div>
+  <div class="arch-section"><span class="arch-section-title">L3 分组</span><!-- 两列 arch-module --></div>
+  <div class="arch-arrow-down"><svg>...</svg></div>
+  <div class="arch-bar">L4 ...</div>
+</div>
 
-  <!-- ═══ L1 ═══ -->
-  <g transform="translate(30,8)">
-    <rect x="0" y="0" width="800" height="54" rx="14" fill="#ECFDF5" filter="url(#card-shadow)"/>
-    <!-- icon 24×24, green stroke -->
-    <g transform="translate(22,15)">
-      <circle cx="12" cy="12" r="11" fill="none" stroke="#10B981" stroke-width="1.6"/>
-      <ellipse cx="12" cy="12" rx="5.5" ry="11" fill="none" stroke="#10B981" stroke-width="1.2"/>
-      <line x1="1" y1="12" x2="23" y2="12" stroke="#10B981" stroke-width="1.2"/>
-    </g>
-    <text x="58" y="22" font-size="14" fill="#0F172A" font-weight="700" font-family="sans-serif">层级名称</text>
-    <text x="58" y="38" font-size="10" fill="#94A3B8" font-weight="500" font-family="sans-serif">English</text>
-    <text x="150" y="32" font-size="13" fill="#475569" font-family="sans-serif">一句话描述</text>
-  </g>
+<!-- 中心平台 (+ 外部节点) -->
+<div style="display:flex;gap:16px;position:relative">
+  <div class="arch-stack"><!-- 左侧节点 -->
+    <div class="arch-node db"><div class="arch-node-icon"><svg>...</svg></div>MySQL</div>
+  </div>
+  <svg class="arch-wires" viewBox="..."><path d="..."/></svg>
+  <div class="arch-box" style="flex:1">
+    <div class="arch-box-header">平台名称</div>
+    <div class="arch-box-body">
+      <div class="arch-section"><span class="arch-section-title">分区</span><!-- arch-module × N --></div>
+    </div>
+  </div>
+</div>
 
-  <!-- Arrow L1→L2 -->
-  <line x1="430" y1="64" x2="430" y2="74" stroke="url(#g-arrow)" stroke-width="2" stroke-linecap="round"/>
-  <polygon points="424,72 430,80 436,72" fill="#34D399"/>
-
-  <!-- ═══ L2 ═══ -->
-  <g transform="translate(30,80)">
-    <rect x="0" y="0" width="800" height="54" rx="14" fill="#ECFDF5" filter="url(#card-shadow)"/>
-    <!-- icon -->
-    <g transform="translate(22,15)"><!-- 24×24 icon SVG --></g>
-    <text x="58" y="22" font-size="14" fill="#0F172A" font-weight="700" font-family="sans-serif">层级名称</text>
-    <text x="58" y="38" font-size="10" fill="#94A3B8" font-weight="500" font-family="sans-serif">English</text>
-    <text x="150" y="32" font-size="13" fill="#475569" font-family="sans-serif">一句话描述</text>
-  </g>
-
-  <!-- Split arrows L2→L3（左右分叉） -->
-  <line x1="300" y1="136" x2="300" y2="148" stroke="url(#g-arrow)" stroke-width="2" stroke-linecap="round"/>
-  <polygon points="294,146 300,154 306,146" fill="#34D399"/>
-  <line x1="560" y1="136" x2="560" y2="148" stroke="url(#g-arrow)" stroke-width="2" stroke-linecap="round"/>
-  <polygon points="554,146 560,154 566,146" fill="#34D399"/>
-
-  <!-- ═══ L3: 同层两列 ═══ -->
-  <g transform="translate(30,154)">
-    <!-- 虚线分组容器 -->
-    <rect x="0" y="0" width="800" height="66" rx="14" fill="rgba(16,185,129,0.035)"
-          stroke="#10B981" stroke-width="1.2" stroke-dasharray="6,4" stroke-opacity="0.3"/>
-
-    <!-- L3a 左 -->
-    <rect x="6" y="6" width="392" height="54" rx="11" fill="#ECFDF5" filter="url(#card-shadow)"/>
-    <g transform="translate(26,21)"><!-- 24×24 icon SVG --></g>
-    <text x="62" y="25" font-size="13" fill="#0F172A" font-weight="700" font-family="sans-serif">模块A</text>
-    <text x="62" y="40" font-size="9" fill="#94A3B8" font-weight="500" font-family="sans-serif">Module A</text>
-    <text x="140" y="34" font-size="12" fill="#475569" font-family="sans-serif">简短描述</text>
-
-    <!-- L3b 右 -->
-    <rect x="402" y="6" width="392" height="54" rx="11" fill="#ECFDF5" filter="url(#card-shadow)"/>
-    <g transform="translate(422,21)"><!-- 24×24 icon SVG --></g>
-    <text x="458" y="25" font-size="13" fill="#0F172A" font-weight="700" font-family="sans-serif">模块B</text>
-    <text x="458" y="40" font-size="9" fill="#94A3B8" font-weight="500" font-family="sans-serif">Module B</text>
-    <text x="535" y="34" font-size="12" fill="#475569" font-family="sans-serif">简短描述</text>
-  </g>
-
-  <!-- Merge arrows L3→L4 -->
-  <line x1="300" y1="222" x2="300" y2="234" stroke="url(#g-arrow)" stroke-width="2" stroke-linecap="round"/>
-  <line x1="560" y1="222" x2="560" y2="234" stroke="url(#g-arrow)" stroke-width="2" stroke-linecap="round"/>
-  <line x1="300" y1="234" x2="560" y2="234" stroke="url(#g-arrow)" stroke-width="2"/>
-  <line x1="430" y1="234" x2="430" y2="244" stroke="url(#g-arrow)" stroke-width="2" stroke-linecap="round"/>
-  <polygon points="424,242 430,250 436,242" fill="#34D399"/>
-
-  <!-- ═══ L4 ═══ -->
-  <g transform="translate(30,250)">
-    <rect x="0" y="0" width="800" height="54" rx="14" fill="#ECFDF5" filter="url(#card-shadow)"/>
-    <g transform="translate(22,15)"><!-- 24×24 icon SVG --></g>
-    <text x="58" y="22" font-size="14" fill="#0F172A" font-weight="700" font-family="sans-serif">层级名称</text>
-    <text x="58" y="38" font-size="10" fill="#94A3B8" font-weight="500" font-family="sans-serif">English</text>
-    <text x="150" y="32" font-size="13" fill="#475569" font-family="sans-serif">一句话描述</text>
-  </g>
-
-  <!-- 右侧层级标签 -->
-  <text x="850" y="38" font-size="10" fill="#10B981" font-weight="700" font-family="sans-serif">L1</text>
-  <text x="850" y="110" font-size="10" fill="#10B981" font-weight="700" font-family="sans-serif">L2</text>
-  <text x="850" y="190" font-size="10" fill="#10B981" font-weight="700" font-family="sans-serif">L3</text>
-  <text x="850" y="280" font-size="10" fill="#10B981" font-weight="700" font-family="sans-serif">L4</text>
-</svg>
+<!-- 能力矩阵 -->
+<div class="arch-sidebar">
+  <div class="arch-sidebar-label">标签</div>
+  <div class="arch-sidebar-body">
+    <div class="arch-grid arch-grid-6"><!-- arch-card × N --></div>
+  </div>
+</div>
 ```
 
 ### 生成规则
 
-1. **viewBox 固定**：`0 0 860 320`（≤4层），层数增加则高度相应增加
-2. **卡片尺寸**：全宽 800×54px，L3 子卡片 392×54px（两列 + 6px 间距 + 虚线框 padding）
-3. **卡片 Y 间距**：每层间隔 72px（translate Y: 8, 80, 154, 250）
-4. **箭头坐标**：全宽箭头 x=430，分叉箭头 x=300/x=560，merge 同理
-5. **图标**：24×24 内联 SVG，绿色描边（`stroke="#10B981"`），位于 x=22,y=15（相对卡片偏移）
-6. **层级名**：中文 14px/700 位于 x=58，英文 10px/500 位于 x=58（灰色 `#94A3B8`）
-7. **描述文字**：13px 位于 x=150（L3 子卡片 x=140），字数控制在 30 字以内
-8. **颜色**：
-   - business-modern：卡片 `#ECFDF5`，L3 虚线框 `rgba(16,185,129,0.035)` + `stroke="#10B981"`
-   - business-dark：卡片 `#0D2818`，L3 虚线框 `rgba(16,185,129,0.06)` + `stroke="#10B981"`，文字改为 `#F1F5F9` / `#94A3B8`
-   - aisumicha：卡片 `#faf9f5`，虚线框用 `#1B365D`，图标描边改为 `#1B365D`
-9. **3 层以内**：去掉 L3 虚线分组，单列排列即可
-10. **放入 content-region**：SVG 设置 `class="arch-svg" style="width:100%;max-height:100%"`
+1. **放在 content-region 内**，架构图自适应 flex:1 空间
+2. **组件自由组合**，不限于固定模板——层级用 arch-stack，分区用 arch-section，卡片用 arch-card
+3. **连线用 arch-wires**（SVG 贝塞尔曲线），放在容器内 position:absolute
+4. **暗色主题**：CSS 变量自动切换（`--arch-bg` / `--arch-text` / `--arch-border`），组件结构不变
+5. **aisumicha 不支持架构图**
 
 ---
 

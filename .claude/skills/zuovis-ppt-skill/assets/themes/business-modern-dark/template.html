@@ -5,9 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{TITLE}}</title>
 
-  <!-- 图标字体 -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-
   <!-- 图表库 -->
   <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
 
@@ -27,23 +24,15 @@
     };
   </script>
 
-  <!-- 动画库 -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-
-  <!-- 字体 -->
+  <!-- 内联 animate.css 关键帧 -->
   <style>
-    @font-face {
-      font-family: 'Alibaba PuHuiTi';
-      src: url('{{FONT_PATH}}AlibabaPuHuiTi-Regular.ttf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
-    }
-    @font-face {
-      font-family: 'Alibaba PuHuiTi';
-      src: url('{{FONT_PATH}}AlibabaPuHuiTi-Bold.ttf') format('truetype');
-      font-weight: bold;
-      font-style: normal;
-    }
+    @keyframes fadeInDown{from{opacity:0;transform:translate3d(0,-40px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+    @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+    @keyframes fadeInUp{from{opacity:0;transform:translate3d(0,40px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+    @keyframes zoomIn{from{opacity:0;transform:scale3d(.3,.3,.3)}50%{opacity:1}}
+    .animate__animated{animation-duration:.6s;animation-fill-mode:both}
+    .animate__fadeInDown{animation-name:fadeInDown}.animate__fadeIn{animation-name:fadeIn;animation-duration:.8s}
+    .animate__fadeInUp{animation-name:fadeInUp}.animate__zoomIn{animation-name:zoomIn}
   </style>
 
   <!-- 主题样式 -->
@@ -105,9 +94,6 @@
   <script>
     // 图表配置
     {{CHART_CONFIG}}
-
-    // 初始化 Lucide 图标
-    lucide.createIcons();
 
     // 幻灯片导航
     (function() {
