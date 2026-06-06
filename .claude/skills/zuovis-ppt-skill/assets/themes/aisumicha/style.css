@@ -24,6 +24,9 @@
   --border-soft: #e5e3d8;
   --ring-warm: rgba(80, 78, 73, 0.15);
 
+  /* ========== 装饰色 ========== */
+  --accent-red: #BA3733;           /* 緋 (ake) — 传统日本朱红，装饰线 */
+
   /* ========== Tag 背景色（实色，非 rgba）========== */
   --tag-08: #EEF2F7;
   --tag-14: #E4ECF5;
@@ -32,7 +35,7 @@
   --tag-30: #D6E1EE;
 
   /* ========== 字体 ========== */
-  --serif: 'TsangerJinKai02', 'ChaoXianRiBaoMingChao', Georgia, 'Source Han Serif SC', 'Noto Serif CJK SC', 'Songti SC', serif;
+  --serif: 'ChosunilboNM', 'Source Han Serif SC', 'Noto Serif CJK SC', Georgia, 'Songti SC', serif;
   --sans: var(--serif);
   --mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, Monaco, monospace;
 
@@ -167,6 +170,8 @@ body::before {
   font-size: 13px;
   color: var(--stone);
   line-height: 1.6;
+  padding-left: 0.75rem;
+  border-left: 1px solid var(--accent-red);
 }
 
 .slide.cover-slide .cover-author {
@@ -479,6 +484,8 @@ body::before {
 .slide.end-slide .end-meta {
   font-size: 13px;
   color: var(--stone);
+  padding-left: 0.75rem;
+  border-left: 1px solid var(--accent-red);
 }
 
 /* ========== 页码 ========== */

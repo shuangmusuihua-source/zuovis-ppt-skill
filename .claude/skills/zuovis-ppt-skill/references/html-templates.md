@@ -277,130 +277,122 @@
 
 ### 设计规范
 
-- viewBox 宽度固定 900，高度 = 层数 × 80 + 40（标题区）
-- 每层一个横向矩形框（rx=8 圆角），左侧有色块标识层级名，右侧放组件标签
-- 层间用向下箭头连接
-- 颜色：business 主题用绿色系 `#10B981`，aisumicha 用油墨蓝 `#1B365D`
-- 放在 content-region 内，SVG 自动被 `flex:1` 和 `justify-content:center` 居中
+- 卡片底色：business-modern 用 `#ECFDF5`（浅薄荷绿），business-dark 用 `#0D2818`（暗森林绿）
+- 卡片圆角 rx=14，通过 figma-squircle 处理为 squircle
+- 投影：`<filter>` feDropShadow，`flood-color="#0F172A" flood-opacity="0.06"`
+- 每层卡片内：图标（绿色描边 24×24）+ 层级中英文名 + 描述文字，紧凑排列
+- 层级间用绿色渐变箭头连接
+- L3 同层多模块：用虚线绿色圆角框 + 浅绿背景包裹，明确同层关系
+- 右侧标注 L1/L2/L3/L4 层级编号
+- viewBox="0 0 860 320"，放在 content-region 内，`style="width:100%;max-height:100%"`
 
-### 布局策略
-
-**4-5 层**：拆成两列放在同一页。左列放上半部分（如感知→推理→记忆），右列放下半部分（如工具→执行），中间加箭头。两列各用一个 SVG，独立 viewBox，横竖空间都利用到位。
-
-**3 层以内**：单列纵向即可。
-
-### 单列 SVG 模板（3 层示例，viewBox="0 0 900 280"）
+### 单列 SVG 模板（4 层含 L3 两列示例）
 
 ```html
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 360" style="width:100%;height:100%;">
+<svg class="arch-svg" viewBox="0 0 860 320" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <filter id="glass"><feGaussianBlur stdDeviation="3"/></filter>
-    <linearGradient id="hdr" x1="0" y1="0" x2="1" y2="1">
+    <linearGradient id="g-arrow" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#10B981"/><stop offset="100%" stop-color="#34D399"/>
     </linearGradient>
+    <filter id="card-shadow">
+      <feDropShadow dx="0" dy="1" stdDeviation="4" flood-color="#0F172A" flood-opacity="0.06"/>
+    </filter>
   </defs>
 
-  <!-- 背景 -->
-  <rect x="0" y="0" width="900" height="360" rx="16" fill="rgba(255,255,255,0.25)" stroke="rgba(255,255,255,0.3)"/>
+  <!-- ═══ L1 ═══ -->
+  <g transform="translate(30,8)">
+    <rect x="0" y="0" width="800" height="54" rx="14" fill="#ECFDF5" filter="url(#card-shadow)"/>
+    <!-- icon 24×24, green stroke -->
+    <g transform="translate(22,15)">
+      <circle cx="12" cy="12" r="11" fill="none" stroke="#10B981" stroke-width="1.6"/>
+      <ellipse cx="12" cy="12" rx="5.5" ry="11" fill="none" stroke="#10B981" stroke-width="1.2"/>
+      <line x1="1" y1="12" x2="23" y2="12" stroke="#10B981" stroke-width="1.2"/>
+    </g>
+    <text x="58" y="22" font-size="14" fill="#0F172A" font-weight="700" font-family="sans-serif">层级名称</text>
+    <text x="58" y="38" font-size="10" fill="#94A3B8" font-weight="500" font-family="sans-serif">English</text>
+    <text x="150" y="32" font-size="13" fill="#475569" font-family="sans-serif">一句话描述</text>
+  </g>
 
-  <!-- Layer 1 -->
-  <rect x="20" y="20" width="140" height="65" rx="8" fill="url(#hdr)"/>
-  <text x="90" y="58" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">感知输入层</text>
-  <rect x="175" y="25" width="700" height="55" rx="8" fill="rgba(16,185,129,0.06)" stroke="rgba(16,185,129,0.15)"/>
-  <rect x="190" y="35" width="90" height="34" rx="6" fill="rgba(16,185,129,0.1)"/>
-  <text x="235" y="57" text-anchor="middle" fill="#0F172A" font-size="13">多模态理解</text>
-  <rect x="290" y="35" width="90" height="34" rx="6" fill="rgba(16,185,129,0.1)"/>
-  <text x="335" y="57" text-anchor="middle" fill="#0F172A" font-size="13">上下文窗口</text>
-  <rect x="390" y="35" width="70" height="34" rx="6" fill="rgba(16,185,129,0.1)"/>
-  <text x="425" y="57" text-anchor="middle" fill="#0F172A" font-size="13">API调用</text>
+  <!-- Arrow L1→L2 -->
+  <line x1="430" y1="64" x2="430" y2="74" stroke="url(#g-arrow)" stroke-width="2" stroke-linecap="round"/>
+  <polygon points="424,72 430,80 436,72" fill="#34D399"/>
 
-  <!-- Arrow 1→2 -->
-  <line x1="450" y1="90" x2="450" y2="115" stroke="#10B981" stroke-width="2"/>
-  <polygon points="444,113 450,123 456,113" fill="#10B981"/>
+  <!-- ═══ L2 ═══ -->
+  <g transform="translate(30,80)">
+    <rect x="0" y="0" width="800" height="54" rx="14" fill="#ECFDF5" filter="url(#card-shadow)"/>
+    <!-- icon -->
+    <g transform="translate(22,15)"><!-- 24×24 icon SVG --></g>
+    <text x="58" y="22" font-size="14" fill="#0F172A" font-weight="700" font-family="sans-serif">层级名称</text>
+    <text x="58" y="38" font-size="10" fill="#94A3B8" font-weight="500" font-family="sans-serif">English</text>
+    <text x="150" y="32" font-size="13" fill="#475569" font-family="sans-serif">一句话描述</text>
+  </g>
 
-  <!-- Layer 2 -->
-  <rect x="20" y="125" width="140" height="65" rx="8" fill="url(#hdr)"/>
-  <text x="90" y="163" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">推理规划层</text>
-  <rect x="175" y="130" width="700" height="55" rx="8" fill="rgba(16,185,129,0.06)" stroke="rgba(16,185,129,0.15)"/>
-  <rect x="190" y="140" width="90" height="34" rx="6" fill="rgba(16,185,129,0.1)"/>
-  <text x="235" y="162" text-anchor="middle" fill="#0F172A" font-size="13">任务分解</text>
-  <rect x="290" y="140" width="90" height="34" rx="6" fill="rgba(16,185,129,0.1)"/>
-  <text x="335" y="162" text-anchor="middle" fill="#0F172A" font-size="13">思维链推理</text>
-  <rect x="390" y="140" width="70" height="34" rx="6" fill="rgba(16,185,129,0.1)"/>
-  <text x="425" y="162" text-anchor="middle" fill="#0F172A" font-size="13">自我纠错</text>
+  <!-- Split arrows L2→L3（左右分叉） -->
+  <line x1="300" y1="136" x2="300" y2="148" stroke="url(#g-arrow)" stroke-width="2" stroke-linecap="round"/>
+  <polygon points="294,146 300,154 306,146" fill="#34D399"/>
+  <line x1="560" y1="136" x2="560" y2="148" stroke="url(#g-arrow)" stroke-width="2" stroke-linecap="round"/>
+  <polygon points="554,146 560,154 566,146" fill="#34D399"/>
 
-  <!-- Arrow 2→3 -->
-  <line x1="450" y1="190" x2="450" y2="215" stroke="#10B981" stroke-width="2"/>
-  <polygon points="444,213 450,223 456,213" fill="#10B981"/>
+  <!-- ═══ L3: 同层两列 ═══ -->
+  <g transform="translate(30,154)">
+    <!-- 虚线分组容器 -->
+    <rect x="0" y="0" width="800" height="66" rx="14" fill="rgba(16,185,129,0.035)"
+          stroke="#10B981" stroke-width="1.2" stroke-dasharray="6,4" stroke-opacity="0.3"/>
 
-  <!-- Layer 3 -->
-  <rect x="20" y="225" width="140" height="65" rx="8" fill="url(#hdr)"/>
-  <text x="90" y="263" text-anchor="middle" fill="#fff" font-size="14" font-weight="700">工具调用层</text>
-  <rect x="175" y="230" width="700" height="55" rx="8" fill="rgba(16,185,129,0.06)" stroke="rgba(16,185,129,0.15)"/>
-  <rect x="190" y="240" width="100" height="34" rx="6" fill="rgba(16,185,129,0.15)" stroke="#10B981"/>
-  <text x="240" y="262" text-anchor="middle" fill="#059669" font-size="13" font-weight="600">MCP协议</text>
-  <rect x="300" y="240" width="70" height="34" rx="6" fill="rgba(16,185,129,0.1)"/>
-  <text x="335" y="262" text-anchor="middle" fill="#0F172A" font-size="13">代码执行</text>
-  <rect x="380" y="240" width="70" height="34" rx="6" fill="rgba(16,185,129,0.1)"/>
-  <text x="415" y="262" text-anchor="middle" fill="#0F172A" font-size="13">文件操作</text>
+    <!-- L3a 左 -->
+    <rect x="6" y="6" width="392" height="54" rx="11" fill="#ECFDF5" filter="url(#card-shadow)"/>
+    <g transform="translate(26,21)"><!-- 24×24 icon SVG --></g>
+    <text x="62" y="25" font-size="13" fill="#0F172A" font-weight="700" font-family="sans-serif">模块A</text>
+    <text x="62" y="40" font-size="9" fill="#94A3B8" font-weight="500" font-family="sans-serif">Module A</text>
+    <text x="140" y="34" font-size="12" fill="#475569" font-family="sans-serif">简短描述</text>
 
-  <!-- Arrow 3→4 -->
-  <line x1="450" y1="290" x2="450" y2="315" stroke="#10B981" stroke-width="2"/>
-  <polygon points="444,313 450,323 456,313" fill="#10B981"/>
+    <!-- L3b 右 -->
+    <rect x="402" y="6" width="392" height="54" rx="11" fill="#ECFDF5" filter="url(#card-shadow)"/>
+    <g transform="translate(422,21)"><!-- 24×24 icon SVG --></g>
+    <text x="458" y="25" font-size="13" fill="#0F172A" font-weight="700" font-family="sans-serif">模块B</text>
+    <text x="458" y="40" font-size="9" fill="#94A3B8" font-weight="500" font-family="sans-serif">Module B</text>
+    <text x="535" y="34" font-size="12" fill="#475569" font-family="sans-serif">简短描述</text>
+  </g>
 
-  <!-- Layer 4 -->
-  <rect x="20" y="325" width="140" height="25" rx="8" fill="url(#hdr)"/>
-  <text x="90" y="342" text-anchor="middle" fill="#fff" font-size="13" font-weight="700">执行输出层</text>
-  <rect x="175" y="325" width="700" height="25" rx="8" fill="rgba(16,185,129,0.06)" stroke="rgba(16,185,129,0.15)"/>
-  <rect x="190" y="328" width="80" height="20" rx="4" fill="rgba(16,185,129,0.1)"/>
-  <text x="230" y="342" text-anchor="middle" fill="#0F172A" font-size="11">代码生成</text>
-  <rect x="280" y="328" width="90" height="20" rx="4" fill="rgba(16,185,129,0.1)"/>
-  <text x="325" y="342" text-anchor="middle" fill="#0F172A" font-size="11">多Agent协作</text>
+  <!-- Merge arrows L3→L4 -->
+  <line x1="300" y1="222" x2="300" y2="234" stroke="url(#g-arrow)" stroke-width="2" stroke-linecap="round"/>
+  <line x1="560" y1="222" x2="560" y2="234" stroke="url(#g-arrow)" stroke-width="2" stroke-linecap="round"/>
+  <line x1="300" y1="234" x2="560" y2="234" stroke="url(#g-arrow)" stroke-width="2"/>
+  <line x1="430" y1="234" x2="430" y2="244" stroke="url(#g-arrow)" stroke-width="2" stroke-linecap="round"/>
+  <polygon points="424,242 430,250 436,242" fill="#34D399"/>
+
+  <!-- ═══ L4 ═══ -->
+  <g transform="translate(30,250)">
+    <rect x="0" y="0" width="800" height="54" rx="14" fill="#ECFDF5" filter="url(#card-shadow)"/>
+    <g transform="translate(22,15)"><!-- 24×24 icon SVG --></g>
+    <text x="58" y="22" font-size="14" fill="#0F172A" font-weight="700" font-family="sans-serif">层级名称</text>
+    <text x="58" y="38" font-size="10" fill="#94A3B8" font-weight="500" font-family="sans-serif">English</text>
+    <text x="150" y="32" font-size="13" fill="#475569" font-family="sans-serif">一句话描述</text>
+  </g>
+
+  <!-- 右侧层级标签 -->
+  <text x="850" y="38" font-size="10" fill="#10B981" font-weight="700" font-family="sans-serif">L1</text>
+  <text x="850" y="110" font-size="10" fill="#10B981" font-weight="700" font-family="sans-serif">L2</text>
+  <text x="850" y="190" font-size="10" fill="#10B981" font-weight="700" font-family="sans-serif">L3</text>
+  <text x="850" y="280" font-size="10" fill="#10B981" font-weight="700" font-family="sans-serif">L4</text>
 </svg>
 ```
 
-### 两列 SVG 模板（4-5 层，content-region flex-row）
-
-将架构图拆成左右两部分放在同一页。content-region 改为 `flex-direction:row`：
-
-```html
-<div class="content-region" style="flex-direction:row;gap:1.5rem;align-items:stretch;">
-  <!-- 左列 SVG：上半部分 -->
-  <div style="flex:1;display:flex;align-items:center;">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 340" style="width:100%;">
-      <defs><linearGradient id="hL" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#10B981"/><stop offset="100%" stop-color="#34D399"/></linearGradient></defs>
-      <rect x="0" y="0" width="420" height="340" rx="16" fill="..." stroke="..."/>
-      <!-- Layer 1, 2, 3 ... -->
-    </svg>
-  </div>
-  <!-- 中间箭头 -->
-  <svg viewBox="0 0 40 60" width="40px" height="60px" style="align-self:center;flex-shrink:0">
-    <line x1="5" y1="30" x2="35" y2="30" stroke="#10B981" stroke-width="3"/>
-    <polygon points="32,24 42,30 32,36" fill="#10B981"/>
-  </svg>
-  <!-- 右列 SVG：下半部分 -->
-  <div style="flex:1;display:flex;align-items:center;">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 340" style="width:100%;">
-      <!-- Layer 4, 5 ... -->
-    </svg>
-  </div>
-</div>
-```
-
-左列标题区域加分类标签（如「信息处理链路」），右列对应加「决策执行链路」。
-
 ### 生成规则
 
-1. **计算 viewBox 高度**：`40 + 层数 × 85`。4层=380，5层=465，3层=295
-2. **每层 Y 坐标**：`层号 × 85 + 20`（层号从0开始）
-3. **箭头 Y 坐标**：从本层底部到下一层顶部（`本层Y+65` 到 `本层Y+105`）
-4. **左侧标签栏**：固定宽140px，高65px（最后层可缩至25px），填充主题渐变色，白色文字
-5. **组件框**：从 x=175 开始，宽700px，每个组件宽 = 文字长度 × 14 + 10px padding
-6. **主题色**：
-   - business-modern/business-modern-dark：header渐变 `#10B981→#34D399`，组件 `rgba(16,185,129,0.1)`
-   - aisumicha：header渐变 `#1B365D→#2D5A8A`，组件 `rgba(27,54,93,0.08)`，stroke `#1B365D`
-7. **层级限制**：3-6 层（SVG 自动缩放，不会溢出）；超过 6 层拆成两页
-8. **放在 content-region 内**，SVG 设置 `style="width:100%;height:100%"` 即可自适应
+1. **viewBox 固定**：`0 0 860 320`（≤4层），层数增加则高度相应增加
+2. **卡片尺寸**：全宽 800×54px，L3 子卡片 392×54px（两列 + 6px 间距 + 虚线框 padding）
+3. **卡片 Y 间距**：每层间隔 72px（translate Y: 8, 80, 154, 250）
+4. **箭头坐标**：全宽箭头 x=430，分叉箭头 x=300/x=560，merge 同理
+5. **图标**：24×24 内联 SVG，绿色描边（`stroke="#10B981"`），位于 x=22,y=15（相对卡片偏移）
+6. **层级名**：中文 14px/700 位于 x=58，英文 10px/500 位于 x=58（灰色 `#94A3B8`）
+7. **描述文字**：13px 位于 x=150（L3 子卡片 x=140），字数控制在 30 字以内
+8. **颜色**：
+   - business-modern：卡片 `#ECFDF5`，L3 虚线框 `rgba(16,185,129,0.035)` + `stroke="#10B981"`
+   - business-dark：卡片 `#0D2818`，L3 虚线框 `rgba(16,185,129,0.06)` + `stroke="#10B981"`，文字改为 `#F1F5F9` / `#94A3B8`
+   - aisumicha：卡片 `#faf9f5`，虚线框用 `#1B365D`，图标描边改为 `#1B365D`
+9. **3 层以内**：去掉 L3 虚线分组，单列排列即可
+10. **放入 content-region**：SVG 设置 `class="arch-svg" style="width:100%;max-height:100%"`
 
 ---
 

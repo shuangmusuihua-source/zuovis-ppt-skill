@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>蓝墨茶·夜 — 主题全览</title>
+<style>
+  body { margin:0; padding:0; background:#0E0D0C; font-family:Georgia,serif; }
+  .showcase-wrapper { max-width:960px; margin:0 auto; padding:40px 20px; }
+  .showcase-title { text-align:center; color:#E5E2D8; font-size:1.5rem; font-weight:500; margin-bottom:8px; }
+  .showcase-subtitle { text-align:center; color:#8A867E; font-size:0.9rem; margin-bottom:40px; }
+  .slide-showcase { width:100%; aspect-ratio:16/9; margin-bottom:24px; position:relative; overflow:hidden; border-radius:8px; box-shadow:0 4px 24px rgba(0,0,0,0.4); }
+  .type-label { position:absolute; top:8px; right:12px; z-index:10; font-size:0.7rem; background:rgba(255,255,255,0.15); color:#E5E2D8; padding:3px 10px; border-radius:4px; font-family:monospace; }
+  @font-face{font-family:'ChosunilboNM';src:local('ChosunilboNM');font-weight:400 500;font-style:normal}
+</style>
+<style id="theme-css">
+/* ═══════════ 蓝墨茶·夜 主题 CSS — 修改后刷新页面即可预览 ═══════════ */
+:root{--parchment:#1C1B1A;--ivory:#262523;--warm-sand:#33312D;--brand:#8BAFCE;--brand-light:#A3C4DE;--near-black:#E5E2D8;--dark-warm:#B0ACA4;--olive:#9E9A92;--stone:#8A867E;--border:#33312D;--border-soft:#2E2C29;--tag-08:#2A3545;--tag-14:#2E3A4A;--tag-18:#324050;--tag-22:#364556;--accent-red:#B13546;--tag-30:#3A4A5C;--serif:'ChosunilboNM','Source Han Serif SC','Noto Serif CJK SC',Georgia,'Songti SC',serif;--slide-pad-v:.6cm;--slide-pad-h:2.5cm;--cover-title:4rem;--cover-subtitle:1.25rem;--section-title:2rem;--content-body:1rem;--page-number:.85rem;--lh-tight:1.2;--lh-dense:1.45;--lh-read:1.55}
+.slide{width:100%;height:100%;display:flex;flex-direction:column;padding:var(--slide-pad-v) var(--slide-pad-h);background:var(--parchment);font-family:var(--serif);letter-spacing:0.35px;color:var(--near-black);box-sizing:border-box;position:relative}
+body .slide::before{content:'';position:absolute;inset:0;pointer-events:none;opacity:.015;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.slide.cover{justify-content:center;align-items:flex-start}.slide.cover .eyebrow{font-size:12px;font-weight:500;letter-spacing:1.2px;text-transform:uppercase;color:var(--stone);margin-bottom:1rem}.slide.cover .cover-title{font-size:var(--cover-title);font-weight:500;line-height:1.05;letter-spacing:-0.5px;margin-bottom:1rem}.slide.cover .cover-title .brand{color:var(--brand)}.slide.cover .tagline{font-size:var(--cover-subtitle);font-weight:400;color:var(--olive);line-height:1.45;margin-bottom:2rem;max-width:600px}.slide.cover .cover-meta{font-size:13px;color:var(--stone);line-height:1.6;padding-left:.75rem;border-left:1px solid var(--accent-red)}
+.slide.content{justify-content:center;align-items:flex-start}.slide.content .content-wrapper{max-width:65%;display:flex;flex-direction:column}.slide.content .section-num{font-weight:500;font-size:14px;color:var(--brand);letter-spacing:0.4px;margin-bottom:.5rem}.slide.content .content-title{font-size:var(--section-title);font-weight:500;line-height:var(--lh-tight);letter-spacing:0.4px;margin-bottom:1.5rem}.slide.content .content-body{font-size:var(--content-body);font-weight:400;color:var(--dark-warm);line-height:1.8}.slide.content .content-body p{margin-bottom:1rem}.slide.content .content-body p:last-child{margin-bottom:0}.highlight{color:var(--brand);font-weight:500}
+.quote-block{padding:1rem 1.25rem;margin:.75rem 0;background:var(--ivory);border-radius:8px;box-shadow:0 0 0 1px var(--border-soft)}.quote-block .quote-text{font-size:1.1rem;font-weight:400;color:var(--near-black);line-height:1.65;margin-bottom:.5rem}.quote-block .quote-author{font-size:13px;color:var(--olive)}
+.content-list{list-style:none;padding:0}.content-list li{font-size:var(--content-body);font-weight:400;color:var(--dark-warm);line-height:1.6;margin-bottom:.75rem;padding-left:1.5rem;position:relative}.content-list li::before{content:'';position:absolute;left:0;top:.55em;width:6px;height:6px;background:var(--brand);border-radius:50%}
+.data-card{background:var(--ivory);border-radius:12px;padding:1rem 1.25rem;box-shadow:0 0 0 1px var(--border-soft)}.data-card .data-value{font-size:1.75rem;font-weight:500;color:var(--brand);line-height:1.2}.data-card .data-label{font-size:12px;color:var(--olive);margin-top:.35rem}.data-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;margin-top:.75rem}.data-grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:.75rem;margin-top:.75rem}
+.compare-table{width:100%;border-collapse:collapse;margin-top:1rem;font-size:13px}.compare-table td,.compare-table th{padding:.45rem .75rem;text-align:left;background:var(--ivory);border-bottom:1px solid var(--border-soft)}.compare-table th{font-weight:500;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--stone)}.compare-table td{color:var(--dark-warm);font-size:13px}.compare-table tr:last-child td{border-bottom:none}
+.timeline{display:flex;flex-direction:column;gap:1rem;max-width:100%}.timeline-item{display:flex;align-items:flex-start;gap:12px}.timeline-marker{width:10px;height:10px;background:var(--ivory);border:2px solid var(--brand);border-radius:50%;flex-shrink:0;margin-top:4px}.timeline-content{flex:1}.timeline-date{font-size:12px;font-weight:500;color:var(--stone);margin-bottom:.25rem;letter-spacing:.5px}.timeline-title{font-size:1.1rem;font-weight:500;color:var(--near-black);margin-bottom:.25rem}.timeline-desc{font-size:14px;color:var(--olive);line-height:1.5}
+.slide.end{justify-content:center;align-items:flex-start}.slide.end .end-title{font-size:var(--cover-title);font-weight:500;line-height:1.05;margin-bottom:1rem}.slide.end .end-subtitle{font-size:var(--cover-subtitle);font-weight:400;color:var(--olive);line-height:1.45;margin-bottom:2rem}.slide.end .end-meta{font-size:13px;color:var(--stone);padding-left:.75rem;border-left:1px solid var(--accent-red)}
+.page-number{position:absolute;bottom:var(--slide-pad-v);right:var(--slide-pad-h);font-size:var(--page-number);color:var(--stone)}.slide.cover .page-number,.slide.end .page-number{display:none}
+</style>
+</head>
+<body>
+<div class="showcase-wrapper">
+<div class="showcase-title">蓝墨茶·夜 AISUMICHA DARK — 主题全览</div>
+<div class="showcase-subtitle">修改上方 &lt;style id="theme-css"&gt; 中的 CSS 变量即可实时预览所有内容类型的效果</div>
+
+<!-- 1. Cover -->
+<div class="slide-showcase"><div class="type-label">cover</div>
+  <div class="slide cover"><div class="cover-content">
+    <div class="eyebrow">KAMISHIBAI · 纸芝居</div>
+    <div class="cover-title"><span class="brand">文学</span>中的孤独美学</div>
+    <div class="tagline">从马尔克斯到村上春树，孤独如何塑造现代文学的灵魂</div>
+    <div class="cover-meta"><div>分享人：林知远</div><div>2026 年 6 月 · 读书沙龙</div></div>
+  </div></div>
+</div>
+
+<!-- 2. Paragraph -->
+<div class="slide-showcase"><div class="type-label">paragraph</div>
+  <div class="slide content"><div class="content-wrapper">
+    <div class="section-num">壹</div>
+    <div class="content-title">作品概述与文学地位</div>
+    <div class="content-body">
+      <p><span class="highlight">《百年孤独》</span>是哥伦比亚作家加西亚·马尔克斯的代表作，1967 年首次出版。小说以虚构小镇马孔多为舞台，讲述了布恩迪亚家族七代人的兴衰史。</p>
+      <p>这部作品被视为<span class="highlight">魔幻现实主义</span>文学的巅峰之作，将神话传说与现实交织。1982 年马尔克斯因此荣获诺贝尔文学奖。</p>
+    </div>
+  </div><div class="page-number">2 | 8</div></div>
+</div>
+
+<!-- 3. Quote -->
+<div class="slide-showcase"><div class="type-label">quote (2 条)</div>
+  <div class="slide content"><div class="content-wrapper">
+    <div class="section-num">贰</div>
+    <div class="content-title">经典语录</div>
+    <div class="content-body">
+      <div class="quote-block"><div class="quote-text">生命中曾经有过的所有灿烂，原来终究都需要用寂寞来偿还。</div><div class="quote-author">马尔克斯《百年孤独》</div></div>
+      <div class="quote-block"><div class="quote-text">无论走到哪里，都应该记住，过去都是假的，回忆是一条没有归途的路。</div><div class="quote-author">马尔克斯《百年孤独》</div></div>
+    </div>
+  </div><div class="page-number">3 | 8</div></div>
+</div>
+
+<!-- 4. Data Cards -->
+<div class="slide-showcase"><div class="type-label">data-cards (3+2)</div>
+  <div class="slide content"><div class="content-wrapper">
+    <div class="section-num">叁</div>
+    <div class="content-title">一部书的全球影响力</div>
+    <div class="content-body">
+      <div class="data-grid"><div class="data-card"><div class="data-value">5,000万+</div><div class="data-label">全球累计销量</div></div><div class="data-card"><div class="data-value">46</div><div class="data-label">翻译语言数量</div></div><div class="data-card"><div class="data-value">1967</div><div class="data-label">首次出版年份</div></div></div>
+      <div class="data-grid-2"><div class="data-card"><div class="data-value">1982</div><div class="data-label">马尔克斯获诺贝尔文学奖</div></div><div class="data-card"><div class="data-value">7 代</div><div class="data-label">布恩迪亚家族百年兴衰</div></div></div>
+    </div>
+  </div><div class="page-number">4 | 8</div></div>
+</div>
+
+<!-- 5. Comparison Table -->
+<div class="slide-showcase"><div class="type-label">comparison-table (5行)</div>
+  <div class="slide content"><div class="content-wrapper">
+    <div class="section-num">肆</div>
+    <div class="content-title">金陵十二钗判词选录</div>
+    <div class="content-body">
+      <table class="compare-table"><thead><tr><th>人物</th><th>判词摘要</th><th>命运</th></tr></thead><tbody>
+        <tr><td>林黛玉</td><td>堪怜咏絮才，玉带林中挂</td><td>泪尽而亡</td></tr>
+        <tr><td>薛宝钗</td><td>可叹停机德，金簪雪里埋</td><td>独守空闺</td></tr>
+        <tr><td>王熙凤</td><td>凡鸟偏从末世来</td><td>哭向金陵</td></tr>
+        <tr><td>贾探春</td><td>才自精明志自高</td><td>远嫁他乡</td></tr>
+        <tr><td>史湘云</td><td>富贵又何为</td><td>湘江水逝</td></tr>
+      </tbody></table>
+    </div>
+  </div><div class="page-number">5 | 8</div></div>
+</div>
+
+<!-- 6. Timeline -->
+<div class="slide-showcase"><div class="type-label">timeline (竖向 · 4项)</div>
+  <div class="slide content"><div class="content-wrapper">
+    <div class="section-num">伍</div>
+    <div class="content-title">布恩迪亚家族简史</div>
+    <div class="content-body"><div class="timeline">
+      <div class="timeline-item"><div class="timeline-marker"></div><div class="timeline-content"><div class="timeline-date">第一代</div><div class="timeline-title">何塞·阿尔卡蒂奥 & 乌尔苏拉</div><div class="timeline-desc">表兄妹联姻，创立马孔多，开启百年传奇</div></div></div>
+      <div class="timeline-item"><div class="timeline-marker"></div><div class="timeline-content"><div class="timeline-date">第二代</div><div class="timeline-title">奥雷里亚诺上校</div><div class="timeline-desc">发动三十二场起义皆失败，晚年制小金鱼度日</div></div></div>
+      <div class="timeline-item"><div class="timeline-marker"></div><div class="timeline-content"><div class="timeline-date">第四~六代</div><div class="timeline-title">繁荣与衰败</div><div class="timeline-desc">香蕉公司带来虚假繁荣，三千人大屠杀被抹去</div></div></div>
+      <div class="timeline-item"><div class="timeline-marker"></div><div class="timeline-content"><div class="timeline-date">第七代</div><div class="timeline-title">预言应验</div><div class="timeline-desc">长着猪尾巴的婴儿被蚂蚁吃掉，马孔多被飓风抹去</div></div></div>
+    </div></div>
+  </div><div class="page-number">6 | 8</div></div>
+</div>
+
+<!-- 7. List -->
+<div class="slide-showcase"><div class="type-label">list (5项 · 圆点装饰)</div>
+  <div class="slide content"><div class="content-wrapper">
+    <div class="section-num">陆</div>
+    <div class="content-title">五大核心主题</div>
+    <div class="content-body"><ul class="content-list">
+      <li><span class="highlight">孤独</span> — 布恩迪亚家族成员各自以不同方式承受孤独，上校做小金鱼、阿玛兰妲织寿衣</li>
+      <li><span class="highlight">宿命</span> — 羊皮卷预言一切，名字重复暗示命运轮回</li>
+      <li><span class="highlight">时间</span> — 既是循环又是线性的，马孔多是世界的缩影</li>
+      <li><span class="highlight">权力与暴力</span> — 三十二次起义、香蕉公司大屠杀，折射哥伦比亚百年内战</li>
+      <li><span class="highlight">记忆与遗忘</span> — 失眠瘟疫象征历史遗忘，警示民族记忆</li>
+    </ul></div>
+  </div><div class="page-number">7 | 8</div></div>
+</div>
+
+<!-- 8. End -->
+<div class="slide-showcase"><div class="type-label">end</div>
+  <div class="slide end"><div class="end-content">
+    <div class="end-title">谢谢聆听</div>
+    <div class="end-subtitle">阅读，是与伟大的灵魂对话</div>
+    <div class="end-meta"><div>林知远 · 2026 年 6 月</div></div>
+  </div></div>
+</div>
+
+</div>
+
+<script type="module">
+import { getSvgPath } from 'https://cdn.jsdelivr.net/npm/figma-squircle@1/+esm';
+document.querySelectorAll('.data-card,.quote-block').forEach(el=>{
+  const r=parseFloat(getComputedStyle(el).borderRadius)||12;
+  el.style.clipPath=`path('${getSvgPath({width:el.clientWidth,height:el.clientHeight,cornerRadius:Math.min(r,el.clientWidth/3,el.clientHeight/3),cornerSmoothing:1,preserveSmoothing:!0})}')`;
+});
+</script>
+</body>
+</html>
